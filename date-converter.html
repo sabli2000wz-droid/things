@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>日期格式轉換</title>
+<title>Date Converter</title>
 <style>
   :root {
     --bg: #f6f7f9; --card: #fff; --text: #1f2328; --muted: #6b7280;
@@ -19,7 +19,7 @@
   body {
     margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
     background: var(--bg); color: var(--text);
-    font-family: system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
     padding: 16px;
   }
   .card {
@@ -47,22 +47,22 @@
 </head>
 <body>
 <main class="card">
-  <h1>日期格式轉換</h1>
+  <h1>Date Format Converter</h1>
 
-  <label for="input">輸入日期（如 01-10-2026、01.10.2026、01 10 2026）</label>
+  <label for="input">Enter a date (e.g. 01-10-2026, 01.10.2026, 01 10 2026)</label>
   <input id="input" type="text" placeholder="01-10-2026" autocomplete="off" autofocus>
 
-  <label for="sep">輸出分隔符</label>
+  <label for="sep">Output separator</label>
   <select id="sep">
-    <option value="/">/（01/10/2026）</option>
-    <option value="-">-（01-10-2026）</option>
-    <option value=".">.（01.10.2026）</option>
+    <option value="/">/ (01/10/2026)</option>
+    <option value="-">- (01-10-2026)</option>
+    <option value=".">. (01.10.2026)</option>
   </select>
 
-  <label for="output">結果（按 Enter 或點擊複製）</label>
+  <label for="output">Result (press Enter or click to copy)</label>
   <div class="row">
     <input id="output" type="text" readonly>
-    <button id="copy" disabled>複製</button>
+    <button id="copy" disabled>Copy</button>
   </div>
   <div id="msg" class="msg"></div>
 </main>
@@ -80,7 +80,7 @@
     const raw = input.value.trim();
     if (!raw) { output.value = ''; copyBtn.disabled = true; setMsg(''); return; }
 
-    // Split on any non-digit characters (-, ., /, space, 年月日 等)
+    // Split on any non-digit characters (-, ., /, space, etc.)
     const parts = raw.split(/\D+/).filter(Boolean);
     let a, b, c;
     if (parts.length === 3) {
@@ -90,7 +90,7 @@
       a = parts[0].slice(0, 2); b = parts[0].slice(2, 4); c = parts[0].slice(4);
     } else {
       output.value = ''; copyBtn.disabled = true;
-      setMsg('格式無法識別，請輸入如 01-10-2026', 'err');
+      setMsg('Unrecognized format. Try something like 01-10-2026', 'err');
       return;
     }
     const pad = s => s.length === 1 ? '0' + s : s;
@@ -107,7 +107,7 @@
       output.select();
       document.execCommand('copy');
     }
-    setMsg('已複製：' + output.value, 'ok');
+    setMsg('Copied: ' + output.value, 'ok');
   }
 
   input.addEventListener('input', convert);
